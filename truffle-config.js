@@ -27,11 +27,8 @@ const HDWalletProvider = require('@truffle/hdwallet-provider')
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 
 const MNEMONIC = process.env.MNEMONIC || 'clock radar mass judge dismiss just intact mind resemble fringe diary casino'
-const PRIVATE_KEY = process.env.PRIVATE_KEY
 const API_KEY = process.env.API_KEY
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY
-const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY
-const INFURA_PROJECT_ID = process.env.INFURA_PROJECT_ID
 
 module.exports = {
   /**
@@ -43,8 +40,6 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
-
-  plugins: ["truffle-plugin-verify"],
 
   networks: {
     development: {
@@ -83,13 +78,12 @@ module.exports = {
     },
     mumbaiChild: {
       provider: () =>
-        new HDWalletProvider({
-            privateKeys: [PRIVATE_KEY],
-            providerOrUrl: `https://polygon-mumbai.infura.io/v3/${INFURA_PROJECT_ID}`
-          }
+        new HDWalletProvider(
+          MNEMONIC,
+          'https://rpc-mumbai.matic.today'
         ),
       network_id: 80001,
-      gas: 2100000,
+      gas: 7000000,
       gasPrice: 10000000000, // 10 gwei
       skipDryRun: true
     },
@@ -106,13 +100,12 @@ module.exports = {
     },
     mainnetChild: {
       provider: () =>
-        new HDWalletProvider({
-            privateKeys: [PRIVATE_KEY],
-            providerOrUrl: `https://polygon-mainnet.infura.io/v3/${INFURA_PROJECT_ID}`
-          }
+        new HDWalletProvider(
+          MNEMONIC,
+          'https://rpc-mainnet.matic.network'
         ),
       network_id: 137,
-      gas: 2100000,
+      gas: 7000000,
       gasPrice: 10000000000, // 10 gwei
       skipDryRun: true
     }
@@ -133,7 +126,7 @@ module.exports = {
   compilers: {
     solc: {
       version: '0.6.6', // Fetch exact version from solc-bin (default: truffle's version)
-      docker: false, // Use "0.5.1" you've installed locally with docker (default: false)
+      docker: true, // Use "0.5.1" you've installed locally with docker (default: false)
       parser: 'solcjs',
       settings: { // See the solidity docs for advice about optimization and evmVersion
         optimizer: {
@@ -150,7 +143,6 @@ module.exports = {
   },
 
   api_keys: {
-    etherscan: ETHERSCAN_API_KEY,
-    polygonscan: POLYGONSCAN_API_KEY
+    etherscan: ETHERSCAN_API_KEY
   }
 }
