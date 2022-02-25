@@ -1,5 +1,7 @@
 # Matic PoS (Proof-of-Stake) portal contracts
 
+Check [CERE.md](CERE.md) for ChildErc20 SC's deploy and verify scripts.
+
 ![Build Status](https://github.com/maticnetwork/pos-portal/workflows/CI/badge.svg)
 
 Smart contracts that powers the PoS (proof-of-stake) based bridge mechanism for [Matic Network](https://matic.network). 
